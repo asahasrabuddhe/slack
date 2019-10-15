@@ -1,6 +1,7 @@
 package stack_test
 
 import (
+	"errors"
 	"go.ajitem.com/stack"
 	"testing"
 )
@@ -55,7 +56,11 @@ func Test_Stack(t *testing.T) {
 
 				s.Push(5)
 
-				number := s.Peek()
+				number, err := s.Peek()
+				if err != nil {
+					t.Error(err)
+				}
+
 				size := s.Size()
 
 				if number != 5 {
@@ -76,7 +81,11 @@ func Test_Stack(t *testing.T) {
 				s.Push(10)
 
 				size := s.Size()
-				number := s.Pop()
+				number, err := s.Pop()
+				if err != nil {
+					t.Error(err)
+				}
+
 				sizeAfterPop := s.Size()
 
 				if number != 10 {
@@ -96,15 +105,45 @@ func Test_Stack(t *testing.T) {
 				s.Push(5)
 				s.Push(10)
 
-				number := s.Pop()
+				number, err := s.Pop()
+				if err != nil {
+					t.Error(err)
+				}
+
 
 				if number != 10 {
 					t.Errorf("got %d, expected 10", number)
 				}
 
-				number = s.Peek()
+				number, err = s.Peek()
+				if err != nil {
+					t.Error(err)
+				}
+
 				if number != 5 {
 					t.Errorf("got %d, expected 5", number)
+				}
+			},
+		},
+		{
+			name: "when peek is called on an empty stack, an error is returned",
+			test: func(t *testing.T) {
+				s := stack.New()
+
+				_, err := s.Peek()
+				if err != nil && errors.As(err, &stack.IsEmpty) {
+					t.Errorf("got %v, expected %v", err, stack.IsEmpty)
+				}
+			},
+		},
+		{
+			name: "when pop is called on an empty stack, an error is returned",
+			test: func(t *testing.T) {
+				s := stack.New()
+
+				_, err := s.Pop()
+				if err != nil && errors.As(err, &stack.IsEmpty) {
+					t.Errorf("got %v, expected %v", err, stack.IsEmpty)
 				}
 			},
 		},
@@ -133,7 +172,7 @@ func BenchmarkStack_Pop(b *testing.B) {
 	b.StartTimer()
 
 	for i := 0; i < 10; i++ {
-		_ = s.Pop()
+		_, _ = s.Pop()
 	}
 
 	b.StopTimer()
