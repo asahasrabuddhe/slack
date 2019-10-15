@@ -1,4 +1,5 @@
 # stack
+
     import "go.ajitem.com/stack"
 
 A stack is a fundamental data structure which is extensively used. This package
@@ -6,6 +7,10 @@ provides a basic implementation of a stack in Go. A stack works using Last In
 First Out (LIFO) method.
 
 ## Usage
+
+```go
+var IsEmpty = errors.New("stack is empty")
+```
 
 #### type Stack
 
@@ -25,14 +30,14 @@ Create a new stack
 #### func (*Stack) Peek
 
 ```go
-func (s *Stack) Peek() int
+func (s *Stack) Peek() (int, error)
 ```
 Return the item on the top of the stack
 
 #### func (*Stack) Pop
 
 ```go
-func (s *Stack) Pop() int
+func (s *Stack) Pop() (int, error)
 ```
 Pop (delete) the item on the top of stack and return it
 
@@ -53,27 +58,40 @@ Returns the size (number of elements) in the stack
 ## Example
 
 ```go
-s := stack.New()
+package main
 
-s.Push(1)
-s.Push(2)
-s.Push(3)
-s.Push(4)
+import (
+    "fmt"
+    "go.ajitem.com/stack"
+)
 
-fmt.Println("size:", s.Size())
+func main() {
+    s := stack.New()
 
-fmt.Println("number:", s.Pop())
-fmt.Println("number:", s.Pop())
-fmt.Println("number:", s.Pop())
-
-fmt.Println("size:", s.Size())
-fmt.Println("number:", s.Peek())
-
-// Output:
-// size: 4
-// number: 4
-// number: 3
-// number: 2
-// size: 1
-// number: 1
+    s.Push(1)
+    s.Push(2)
+    s.Push(3)
+    s.Push(4)
+    
+    fmt.Println("size:", s.Size())
+    
+    number, _ := s.Pop()
+    fmt.Println("number:", number)
+    number, _ = s.Pop()
+    fmt.Println("number:", number)
+    number, _ = s.Pop()
+    fmt.Println("number:", number)
+    
+    fmt.Println("size:", s.Size())
+    number, _ = s.Peek()
+    fmt.Println("number:", number)
+    
+    // Output:
+    // size: 4
+    // number: 4
+    // number: 3
+    // number: 2
+    // size: 1
+    // number: 1
+}
 ```

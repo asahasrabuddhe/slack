@@ -1,8 +1,12 @@
 package stack
 
+import "errors"
+
 type Stack struct {
 	number []int
 }
+
+var IsEmpty = errors.New("stack is empty")
 
 // Create a new stack
 func New() *Stack {
@@ -20,14 +24,22 @@ func (s *Stack) Push(number int) {
 }
 
 // Return the item on the top of the stack
-func (s *Stack) Peek() int {
-	return s.number[len(s.number)-1]
+func (s *Stack) Peek() (int, error) {
+	if s.Size() > 0 {
+		return s.number[len(s.number)-1], nil
+	} else {
+		return 0, IsEmpty
+	}
 }
 
 // Pop (delete) the item on the top of stack and return it
-func (s *Stack) Pop() int {
-	number := s.number[len(s.number)-1]
+func (s *Stack) Pop() (int, error) {
+	if s.Size() > 0 {
+		number := s.number[len(s.number)-1]
 
-	s.number = s.number[:len(s.number)-1]
-	return number
+		s.number = s.number[:len(s.number)-1]
+		return number, nil
+	} else {
+		return 0, IsEmpty
+	}
 }

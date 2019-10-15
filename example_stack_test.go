@@ -15,12 +15,16 @@ func Example() {
 
 	fmt.Println("size:", s.Size())
 
-	fmt.Println("number:", s.Pop())
-	fmt.Println("number:", s.Pop())
-	fmt.Println("number:", s.Pop())
+	number, _ := s.Pop()
+	fmt.Println("number:", number)
+	number, _ = s.Pop()
+	fmt.Println("number:", number)
+	number, _ = s.Pop()
+	fmt.Println("number:", number)
 
 	fmt.Println("size:", s.Size())
-	fmt.Println("number:", s.Peek())
+	number, _ = s.Peek()
+	fmt.Println("number:", number)
 	// Output:
 	// size: 4
 	// number: 4
