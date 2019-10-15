@@ -6,6 +6,8 @@ type Stack struct {
 	number []int
 }
 
+// IsEmpty is the error returned by the stack when no elements are
+// present in the stack
 var IsEmpty = errors.New("stack is empty")
 
 // Create a new stack
