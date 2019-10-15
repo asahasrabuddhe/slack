@@ -1,7 +1,6 @@
 package stack_test
 
 import (
-	"fmt"
 	"go.ajitem.com/stack"
 	"testing"
 )
@@ -114,4 +113,28 @@ func Test_Stack(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, tt.test)
 	}
+}
+
+func BenchmarkStack_Push(b *testing.B) {
+	s := stack.New()
+
+	for i := 0; i < 10; i++ {
+		s.Push(i)
+	}
+}
+
+func BenchmarkStack_Pop(b *testing.B) {
+	s := stack.New()
+
+	for i := 0; i <= 10; i++ {
+		s.Push(i)
+	}
+
+	b.StartTimer()
+
+	for i := 0; i < 10; i++ {
+		_ = s.Pop()
+	}
+
+	b.StopTimer()
 }
