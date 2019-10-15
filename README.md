@@ -1,5 +1,4 @@
 # stack
---
     import "go.ajitem.com/stack"
 
 A stack is a fundamental data structure which is extensively used. This package
@@ -50,3 +49,31 @@ Push (add) a new value to the top of the stack
 func (s *Stack) Size() int
 ```
 Returns the size (number of elements) in the stack
+
+## Example
+
+```go
+s := stack.New()
+
+s.Push(1)
+s.Push(2)
+s.Push(3)
+s.Push(4)
+
+fmt.Println("size:", s.Size())
+
+fmt.Println("number:", s.Pop())
+fmt.Println("number:", s.Pop())
+fmt.Println("number:", s.Pop())
+
+fmt.Println("size:", s.Size())
+fmt.Println("number:", s.Peek())
+
+// Output:
+// size: 4
+// number: 4
+// number: 3
+// number: 2
+// size: 1
+// number: 1
+```
